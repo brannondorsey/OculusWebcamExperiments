@@ -28,7 +28,6 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    bool streaming;
     bool deviceFound;
     int camWidth;
     int camHeight;
@@ -39,6 +38,7 @@ public:
     ofTrueTypeFont font;
     ofRectangle noWebcamMessageBounds;
     ofImage mask;
+    ofTexture texture;
     SharedIPVideoGrabber videoGrabber;
     
     

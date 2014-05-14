@@ -4,6 +4,7 @@
 void ofApp::setup(){
     
     ofSetFrameRate(30);
+    ofSetVerticalSync(true);
     
     //we can now get back a list of devices.
 	vector<ofVideoDevice> devices = webcam.listDevices();

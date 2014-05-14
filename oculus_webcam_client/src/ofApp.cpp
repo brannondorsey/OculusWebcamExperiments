@@ -21,7 +21,6 @@ void ofApp::setup(){
     camWidth = 1138;
     camHeight = 640;
 
-    streaming = false;
     videoGrabber = IPVideoGrabber::makeShared();
     videoGrabber->setURI("http://" + address + ":8080/ipvideo");
     videoGrabber->connect(); // connect immediately
@@ -38,7 +37,9 @@ void ofApp::update(){
         videoGrabber->update();
         if (videoGrabber->isConnected() &&
             videoGrabber->isFrameNew()) {
-            if (!streaming) streaming = true;
+            ofPixels& pixelsRef = videoGrabber->getPixelsRef();
+            pixelsRef.resize(camWidth, camHeight);
+            texture.loadData(pixelsRef);
         }
     }
 }
@@ -48,25 +49,24 @@ void ofApp::draw(){
     
     if (deviceFound) {
         if (videoGrabber->isConnected() &&
-            streaming) {
+            texture.isAllocated()) {
             
-            ofTexture& textureRef = videoGrabber->getTextureReference();
-            textureRef.drawSubsection(40,
+            texture.drawSubsection(40,
                                          webcamY,
                                          ofGetWidth()/2,
                                          camHeight,
                                          xOffset,
                                          0,
-                                         textureRef.getWidth()/2,
+                                         texture.getWidth()/2,
                                          camHeight);
             
-            textureRef.drawSubsection(ofGetWidth()/2,
+            texture.drawSubsection(ofGetWidth()/2,
                                          webcamY,
                                          ofGetWidth()/2,
                                          camHeight,
                                          xOffset + 80,
                                          0,
-                                         textureRef.getWidth()/2,
+                                         texture.getWidth()/2,
                                          camHeight);
         }
         mask.draw(0, 0, ofGetWidth(), ofGetHeight());
