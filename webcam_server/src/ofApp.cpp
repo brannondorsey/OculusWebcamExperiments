@@ -20,7 +20,7 @@ void ofApp::setup(){
     webcam.setVerbose(true);
     webcam.setDeviceID(0);
     webcam.setDesiredFrameRate(30);
-    webcam.initGrabber(1138, 640);
+    webcam.initGrabber(480, 270);
     
     BasicIPVideoServerSettings settings;
     server = BasicIPVideoServer::makeShared();
@@ -42,6 +42,7 @@ void ofApp::update(){
 void ofApp::draw(){
     webcam.draw(0,0);
     ofDrawBitmapStringHighlight("Num clients connected: " + ofToString(server->getNumConnections()), 20,20);
+    ofDrawBitmapStringHighlight(ofToString(ofGetFrameRate()) + "fps", 20,35);
 }
 
 //--------------------------------------------------------------
